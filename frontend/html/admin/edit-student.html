@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edit Student</title>
+  <link rel="stylesheet" href="../../styles/new-student.css" />
+  <link rel="stylesheet" href="../../styles/generics.css" />
+  <link rel="stylesheet" href="../../styles/font-awesome-4.7.0/css/font-awesome.css" />
+</head>
+
+<body>
+  <div class="container">
+    <h1>Edit Student</h1>
+    <div class="input-container">
+      <input type="text" placeholder="First Name" id="fname" />
+      <input type="text" placeholder="Last Name" id="lname" />
+      <input type="email" placeholder="Email" id="email" />
+      <input type="number" placeholder="Level" id="level" />
+      <input type="text" placeholder="Gender" id="gender" />
+      <input type="file"  id="profile-image" />
+    </div>
+
+    <button class="button" id="update">Update Student</button>
+  </div>
+
+  <script>
+    // Assume studentId is passed in query string, e.g. edit-student.html?id=4
+    const params = new URLSearchParams(window.location.search);
+    const studentId = params.get("id");
+
+    // Auth token from localStorage
+    const accessToken = localStorage.getItem("accessToken");
+    const formData = new FormData();
+
+    // Fetch student data and pre-fill form
+    function loadStudent() {
+      fetch(`http://127.0.0.1:8000/staff/student-edit/${studentId}/`, {
+        headers: {
+          "Authorization": `Bearer ${accessToken}`
+        }
+      })
+      .then(res => {
+        if (!res.ok) throw new Error("Failed to load student data");
+        return res.json();
+      })
+      .then(data => {
+
+        document.getElementById("fname").value = data.user.first_name || "";
+        document.getElementById("lname").value = data.user.last_name || "";
+        document.getElementById("email").value = data.user.email || "";
+        document.getElementById("level").value = data.level || "";
+        document.getElementById("gender").value = data.gender || "";
+      })
+      .catch(err => alert(err.message));
+    }
+
+    // Update student on button click
+    document.getElementById("update").addEventListener("click", () => {
+
+    // Append form fields by IDs
+    formData.append("user.first_name", document.getElementById("fname").value);
+    formData.append("user.last_name", document.getElementById("lname").value);
+    formData.append("user.email", document.getElementById("email").value);
+    formData.append("level", document.getElementById("level").value);
+    formData.append("gender", document.getElementById("gender").value);
+
+    const profileInput = document.getElementById("profile-image");
+    if (profileInput.files.length > 0) {
+        formData.append("profile_image", profileInput.files[0]);
+    }
+
+    const accessToken = localStorage.getItem("accessToken");
+    const params = new URLSearchParams(window.location.search);
+    const studentId = params.get("id");
+
+    fetch(`http://127.0.0.1:8000/staff/student-edit/${studentId}/`, {
+        method: "PUT", // or "PATCH" depending on your API design
+        headers: {
+        "Authorization": `Bearer ${accessToken}`,
+        // Note: Do NOT set Content-Type header when sending FormData
+        },
+        body: formData,
+    })
+    .then(response => {
+        if (!response.ok) {
+        return response.text().then(text => { throw new Error(text) });
+        }
+        return response.json();
+    })
+    .then(data => {
+        alert("Student updated successfully!");
+        // Optionally redirect or update UI here
+    })
+    .catch(error => {
+        alert("Update failed: " + error.message);
+    });
+    });
+
+
+    if (studentId) {
+      loadStudent();
+    } else {
+      alert("No student ID provided.");
+    }
+  </script>
+</body>
+
+</html>

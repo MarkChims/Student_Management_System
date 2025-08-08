@@ -1,0 +1,197 @@
+.subjects
+{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px 50px;
+    padding: 10px 0 10px 50px;
+}
+
+.subject-card
+{
+    width: 330px;
+    height: 275px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 10px;
+    gap: 15px;
+}
+
+.title-info
+{
+    align-self: stretch;
+    height: 20px;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 20px;
+}
+
+.title-info h2
+{
+    font-size: 1.25em;
+}
+
+.title-info .status
+{
+    background-color: #0080ff;
+    height: 20px;
+    padding: 5px 5px 0 5px;
+    font-size: 1.1;
+    border-radius: 12px;
+}
+
+.perks
+{
+    align-self: stretch;
+    height: 90px;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.perks i
+{
+    color: #0080ff;
+}
+
+.composition
+{
+    align-self: stretch;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px 15px;
+    min-height: 50px;
+}
+
+.composition span
+{
+    min-width: 50px;
+    height: 20px;
+    background-color: silver;
+    border-radius: 5px;
+    padding: 2px 3px 0;
+    font-size: 0.9em;
+
+}
+
+.view
+{
+    width: 100px;
+    min-height: 38px;
+    border: none;
+    background-color: #0080ff;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    color: white
+}
+
+.view:hover
+{
+    cursor: pointer;
+}
+
+
+.container
+{
+    margin: 5% auto;
+    background-color: white;
+    width: 50%;
+    height: 70%;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    padding: 50px 100px;
+    min-height: 450px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    position: relative;
+    border-radius: 15px;
+}
+
+.container .inputs-container
+{
+    flex-grow: 1;
+    align-self: stretch;
+    display: grid;
+    grid-template-columns: 49% 49%;
+    gap: 20px;
+}
+
+.container input[type="text"], .container select, .container input[type="number"]
+{
+    width: 95%;
+    height: 40px;
+    max-height: 40px;
+    border-radius: 3px;
+    border: 1px solid black;
+    padding-left: 10px;
+}
+
+.container button
+{
+    width: 120px;
+    height: 40px;
+    border-radius: 8px;
+    position: relative;
+    /* left: 40%; */
+    background-color: #0080ff;
+    text-align: center;
+    color: white;
+    border: none;
+}
+
+.container h1
+{
+
+    align-self: center;
+    font-size: 2.1em;
+    font-weight: 200;
+}
+
+.perks-container
+{
+    align-self: stretch;
+    height: 150px;
+    min-height: 80px;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    gap: 10px;
+    background-color: #0080ff0a;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.perks-container .perk, .perk
+{
+    align-self: stretch;
+    height: 5px;
+    display: grid;
+    grid-template-columns: 5% 95%;
+    gap: 10px;
+}
+
+.perks-container .perk input[type="checkbox"], .perk input[type="checkbox"]
+{
+    width: 20px;
+    height: 20px;
+    accent-color: #0080ff;
+}
+
+.perk p
+{
+    text-align: 1;
+    font-size: 1.1em;
+    font-style: italic;
+}
+
+.perks-container .perk .active
+{
+    color: #0080ff;
+}
+

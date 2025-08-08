@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./../../styles/generics.css">
+    <link rel="stylesheet" href="../../styles/font-awesome-4.7.0/css/font-awesome.css">
+
+    <title>SMS - Dashboard</title>
+</head>
+
+<body id="main-body" style="flex-direction: row;">
+    <main>
+        <div class="stats-strip">
+<<<<<<< HEAD
+            
+=======
+            <div class="dash-card blue">
+                <i class="fa fa-male"></i>
+                <h1 class="number">200</h1>
+                <span class="title">Male</span>
+            </div>
+
+            <div class="dash-card red">
+                <i class="fa fa-female"></i>
+                <h1 class="number">300</h1>
+                <span class="title">Female</span>
+            </div>
+
+            <div class="dash-card green">
+                <i class="fa fa-graduation-cap"></i>
+                <h1 class="number">500</h1>
+                <span class="title">Total Students</span>
+            </div>
+
+            <div class="dash-card green">
+                <i class="fa fa-graduation-cap"></i>
+                <h1 class="number">500</h1>
+                <span class="title">Total Students</span>
+            </div>
+            <h1>Enrolled Students Students</h1>
+>>>>>>> 840c1ce ( add backend and frontend folders)
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th> </th>
+                    <th>Reg Number</th>
+                    <th>First Name(s)</th>
+                    <th>Last Name</th>
+                    <th>Email Address</th>
+                    <th>Gender</th>
+                    <th>Level</th>
+                    <th> </th>
+                    <th> </th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </main>
+
+    <div class="alert">
+        <i class="fa fa-close"></i>
+        <h4>
+            <i class="fa fa-exclamation">Attention</i>
+        </h4>
+        <p>Are You Sure You Want To Delete Student</p>
+        <div class="names">
+            <span class="name"></span>
+            <span class="surname"></span>
+        </div>
+        <div class="btns">
+            <button style="background-color: red" id="delete-student" onclick="DeleteStudent()">Yes</button>
+            <button class="green" onclick="toggle()">No</button>
+        </div>
+    </div>
+    <script src="../../scripts/update-dashboard.js"></script>
+    <script>
+        let id = 0;
+
+        fetch("http://127.0.0.1:8000/staff/student-list", createObject())
+            .then(response => {
+                if (!response.ok) throw new Error("Failed to load student list");
+                return response.json();
+            })
+            .then(data => {
+                const tbody = document.querySelector("tbody");
+                data.forEach(student => {
+                    tbody.appendChild(createTableRow(student));
+                });
+            })
+            .catch(error => {
+                console.error("Error fetching students:", error);
+            });
+
+        function createTableRow(student) {
+            const row = document.createElement("tr");
+
+            row.innerHTML = `
+                <td>${student.id}</td>
+                <td>${student.reg_number}</td>
+                <td>${student.user.first_name}</td>
+                <td>${student.user.last_name}</td>
+                <td>${student.user.email}</td>
+                <td>${student.gender}</td>
+                <td><span>${student.level}</span></td>
+            `;
+
+            const actionEdit = document.createElement("td");
+            const editBtn = document.createElement("button");
+            editBtn.className = "green";
+            editBtn.innerHTML = "<i class='fa fa-edit'> edit</i>";
+
+            // Add event listener to navigate to edit page with student ID
+            editBtn.addEventListener("click", () => {
+            // Assuming your edit page URL is like 'edit-student.html?id=STUDENT_ID'
+            window.location.href = `edit-student.html?id=${student.id}`;
+            });
+
+            actionEdit.appendChild(editBtn);
+
+            const actionDelete = document.createElement("td");
+            const deleteBtn = document.createElement("button");
+            deleteBtn.innerHTML = "<i class='fa fa-trash'> delete</i>";
+            deleteBtn.style.backgroundColor = "red";
+            deleteBtn.addEventListener("click", () => {
+                const name = document.querySelector(".name");
+                const surname = document.querySelector(".surname");
+                id = student.id;
+                name.textContent = student.user.first_name;
+                surname.textContent = student.user.last_name;
+                localStorage.setItem("delete", student.id);
+                document.querySelector(".alert").style.display = "flex";
+            });
+            actionDelete.appendChild(deleteBtn);
+
+            row.appendChild(actionEdit);
+            row.appendChild(actionDelete);
+
+            return row;
+        }
+
+        function createObject(method) {
+            const accessToken = localStorage.getItem("accessToken");
+            return {
+                method: method ?? "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${accessToken}`
+                },
+            };
+        }
+
+        function DeleteStudent() {
+            setTimeout(() => {
+                const delete_id = localStorage.getItem("delete");
+                if (!delete_id) {
+                    alert("No student selected for deletion");
+                    return;
+                }
+
+                fetch(`http://127.0.0.1:8000/staff/delete-student/${delete_id}/`, createObject("DELETE"))
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.text().then(txt => alert("Error: " + txt));
+                        } else {
+                            alert("Student deleted successfully");
+                            // Remove deleted student's row from the table
+                            const tbody = document.querySelector("tbody");
+                            const rowToDelete = Array.from(tbody.rows).find(row => row.cells[0].textContent == delete_id);
+                            if (rowToDelete) rowToDelete.remove();
+                        }
+                    })
+                    .catch(error => alert(error))
+                    .finally(() => toggle());
+            }, 500);
+        }
+
+        const toggle = () => {
+            document.querySelector(".alert").style.display = "none";
+        };
+    </script>
+</body>

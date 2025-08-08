@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../styles/subjects.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+    <h1>New Hostel</h1>
+    <div class="inputs-container">
+        <input type="text" id="dormCode" placeholder="Hostel Code">
+        <input type="text" id="dormName" placeholder="Hostel Name">
+        <input type="text" id="dormStatus" placeholder="Hostel Status">
+        <input type="number" id="dormCapacity" placeholder="Hostel Capacity">
+        <input type="file" id="dormImage">
+    </div>
+    <button onclick="submitDorm()">Save Hostel</button>
+</div>
+
+<script>
+function submitDorm() {
+    const formData = new FormData();
+    formData.append('code', document.getElementById('dormCode').value);
+    formData.append('name', document.getElementById('dormName').value);
+    formData.append('status', document.getElementById('dormStatus').value);
+    formData.append('capacity', document.getElementById('dormCapacity').value);
+
+    const imageFile = document.getElementById('dormImage').files[0];
+    if (imageFile) {
+        formData.append('dorm_image', imageFile);
+    }
+
+    fetch('http://127.0.0.1:8000/staff/add-dorm', {
+        method: 'POST',
+        body: formData,
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(err => { throw new Error(JSON.stringify(err)) });
+        }
+        return response.json();
+    })
+    .then(data => {
+        alert("Hostel added successfully!");
+        console.log(data);
+    })
+    .catch(error => {
+        alert("Error adding hostel: " + error.message);
+        console.error(error);
+    });
+}
+</script>
+
+</body>
+</html>

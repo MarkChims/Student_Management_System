@@ -1,0 +1,106 @@
+.students {
+    flex-grow: 1;
+    align-items: stretch;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 1px;
+    padding-bottom: 210px;
+}
+
+.student-id-card {
+    width: 375px;
+    height: 225px;
+    border-radius: 15px;
+    display: flex;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    position: relative;
+    margin: 15px 0;
+}
+
+.image {
+    width: 40%;
+    height: 100%;
+    border-radius: 15px 50% 50% 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.curved {
+    width: 100%;
+    height: 40px;
+    border-radius: 15px 15px 0% 0%;
+    background: rgba(30, 143, 255, 1);
+    position: absolute;
+    top: 0;
+}
+
+.down {
+    width: 100%;
+    height: 10px;
+    border-radius: 0 0 15px 15px;
+    border-bottom: 5px solid rgba(30, 143, 255, 0.756);
+    position: absolute;
+    bottom: 0;
+}
+
+.student-id-card img {
+    width: 110px;
+    height: 110px;
+    border-radius: 8px;
+}
+
+.student-card-info {
+    flex-grow: 1;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.student-card-info h3 {
+    font-family: Britannic;
+    font-weight: 100;
+    position: absolute;
+    top: 5px;
+    left: 0;
+    font-size: 16px;
+}
+
+.student-card-info .details {
+    flex-grow: 0.45;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 90%;
+}
+
+.texts {
+    display: flex;
+    align-self: stretch;
+}
+
+.student-card-info .texts span {
+    font-family: tahoma;
+    text-align: left;
+    width: 50%;
+    text-wrap: wrap;
+    font-weight: 600;
+}
+
+.student-card-info .texts span:first-child {
+    max-width: 38%;
+    font-size: 10px;
+    font-family: tahoma;
+    font-weight: 300s;
+}
+
+#card-bg {
+    position: absolute;
+    color: rgba(0, 0, 0, 0.15);
+    font-size: 150px;
+}
