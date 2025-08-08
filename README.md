@@ -135,7 +135,7 @@ To preview and develop the frontend with live reload:
 
 ---
 
-## Usage Notes
+### Usage Notes
 
 - Staff members **must be created via the Django admin panel** (superuser creates staff users).
 - Only authenticated staff users can add or edit student records.
@@ -145,6 +145,9 @@ To preview and develop the frontend with live reload:
 
 ---
 
-## Project Structure
-
+## Sample Login Credentials
+## for simplicity during development use the username as password
+1. Mark Chimunhu:
+   -- Username **H230136N**
+   -- Password **H230136N**
 
